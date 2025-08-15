@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema({
         type: String,
         require: [true, "please enter your password"]
     },
-    refereshToken: {
+    refreshToken: {
         type: String,
 
     },
