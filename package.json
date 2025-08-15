@@ -1,0 +1,24 @@
+{
+  "name": "youtube_clone",
+  "version": "1.0.0",
+  "description": "a full backend of youtube",
+  "keywords": [
+    "youtube",
+    "backend"
+  ],
+  "homepage": "https://github.com/ManishYadav0001/Youtube_clone_full_backend#readme",
+  "bugs": {
+    "url": "https://github.com/ManishYadav0001/Youtube_clone_full_backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManishYadav0001/Youtube_clone_full_backend.git"
+  },
+  "license": "ISC",
+  "author": "manish yadav",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
