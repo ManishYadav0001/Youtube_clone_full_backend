@@ -435,7 +435,8 @@ const updateCoverImage = asyncHandler(
     }
 )
 
-const ChannelDetails = asyncHandler(async (req, res) => {
+const ChannelDetails = asyncHandler(
+    async (req, res) => {
 
     const { username } = req.params;
     const userId = new mongoose.Types.ObjectId(req.user?._id);
@@ -503,9 +504,69 @@ const ChannelDetails = asyncHandler(async (req, res) => {
     )
 
     return res.status(200).
-        json(new ApiResponse(200 , channel[0] , "Channel details fetched"))
+        json(new ApiResponse(200, channel[0], "Channel details fetched"))
 
-})
+}
+)
+
+const GetWatchHistory = asyncHandler(
+    async (req, res) => {
+
+    const user = await User.aggregate(
+        [
+            {
+                $match: {
+                    _id: mongoose.Types.ObjectId(req.user._id)
+                }
+            },
+            {
+                $lookup: {
+                    from: "videos",
+                    localField: "watchHistory",
+                    foreignField: "_id",
+                    as: "watchHistory",
+                    pipeline:[
+                        {
+                            $lookup:{
+                                from:"user",
+                                localField:"owner",
+                                foreignField:"_id",
+                                as:"owner",
+                                pipeline:[
+                                   {
+                                        $project:{
+                                            username:1,
+                                            fullName:1,
+                                            avatar:1
+                                        }
+
+                                   }
+                                ]
+                            },
+                            
+                        },
+                        {
+                            $addFields:{
+                                owner:{
+                                    $first:"$owner"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+        ]
+    )
+
+
+
+    return res.status(200)
+            .json(
+                new ApiResponse(200 , user[0].watchHistory , "watchHistory of the User is Fetched")
+            )
+
+}
+)
 
 
 
@@ -519,5 +580,6 @@ export {
     updateUserDetails,
     updateAvatar,
     updateCoverImage,
-    ChannelDetails
+    ChannelDetails,
+    GetWatchHistory
 }
