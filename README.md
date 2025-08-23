@@ -1,1 +1,1 @@
-# Backend of youtube clone.
+# Backend of video sharing platform
